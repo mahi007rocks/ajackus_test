@@ -64,3 +64,19 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
 end
+
+# Event Sourcing & Architecture
+gem "rails_event_store"
+
+# HTTP Client for Billetto API
+gem "faraday"
+
+# Clerk Authentication
+gem "clerk-sdk-ruby"
+
+group :development, :test do
+  gem "rspec-rails", "~> 7.1"
+  gem "factory_bot_rails"
+  gem "webmock"
+  gem "vcr"
+end
