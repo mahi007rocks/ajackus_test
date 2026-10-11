@@ -80,3 +80,5 @@ group :development, :test do
   gem "webmock"
   gem "vcr"
 end
+
+gem "dotenv-rails", groups: [:development, :test]
