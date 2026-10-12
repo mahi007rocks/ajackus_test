@@ -1,0 +1,38 @@
+<div class="container detail-container">
+  <div class="back-link">
+    <%= link_to "← Back to all events", root_path %>
+  </div>
+
+  <article class="event-detail">
+    <% if @event.image_url.present? %>
+      <div class="detail-banner">
+        <img src="<%= @event.image_url %>" alt="<%= @event.title %>" />
+      </div>
+    <% end %>
+
+    <div class="detail-content">
+      <time class="event-date">
+        <%= @event.starts_at.strftime("%A, %B %d, %Y at %H:%M UTC") %>
+        <% if @event.ends_at.present? %>
+          – <%= @event.ends_at.strftime("%H:%M UTC") %>
+        <% end %>
+      </time>
+
+      <h1 class="detail-title"><%= @event.title %></h1>
+
+      <% if @event.location.present? %>
+        <p class="detail-location"><strong>Location:</strong> <%= @event.location %></p>
+      <% end %>
+
+      <div class="detail-description">
+        <%= simple_format(@event.description) %>
+      </div>
+
+      <div class="detail-actions">
+        <% if @event.url.present? %>
+          <%= link_to "Buy Tickets on Billetto", @event.url, target: "_blank", rel: "noopener", class: "btn-primary" %>
+        <% end %>
+      </div>
+    </div>
+  </article>
+</div>

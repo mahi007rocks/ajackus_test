@@ -1,0 +1,58 @@
+<div class="container">
+  <header class="header">
+    <div class="brand">
+      <h1>Public Events</h1>
+      <p class="subtitle">Live events fetched from Billetto</p>
+    </div>
+  </header>
+
+  <main class="events-grid">
+    <% if @events.empty? %>
+      <div class="empty-state">
+        <p>No events found. Run <code>Billetto::SyncEvents.call</code> to fetch public events.</p>
+      </div>
+    <% else %>
+      <% @events.each do |event| %>
+        <article class="event-card">
+          <div class="card-media">
+            <% if event.image_url.present? %>
+              <img src="<%= event.image_url %>" alt="<%= event.title %>" loading="lazy" />
+            <% else %>
+              <div class="media-placeholder">No Image Available</div>
+            <% end %>
+          </div>
+
+          <div class="card-body">
+            <time class="event-date">
+              <%= event.starts_at.strftime("%a, %b %d, %Y • %H:%M UTC") %>
+            </time>
+
+            <h2 class="event-title">
+              <%= link_to event.title, event_path(event) %>
+            </h2>
+
+            <% if event.location.present? %>
+              <p class="event-location"><%= event.location %></p>
+            <% end %>
+
+            <% if event.description.present? %>
+              <p class="event-description"><%= truncate(strip_tags(event.description), length: 140) %></p>
+            <% end %>
+
+            <div class="card-footer">
+              <% if event.url.present? %>
+                <%= link_to "View on Billetto →", event.url, target: "_blank", rel: "noopener", class: "btn-link" %>
+              <% else %>
+                <%= link_to "Details →", event_path(event), class: "btn-link" %>
+              <% end %>
+
+              <div class="vote-box">
+                <span class="vote-count">Score: 0</span>
+              </div>
+            </div>
+          </div>
+        </article>
+      <% end %>
+    <% end %>
+  </main>
+</div>
