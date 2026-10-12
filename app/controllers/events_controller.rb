@@ -1,6 +1,6 @@
 class EventsController < ApplicationController
   def index
-    @events = Event.upcoming
+    @events = Event.upcoming.includes(:vote_count)
   end
 
   def show

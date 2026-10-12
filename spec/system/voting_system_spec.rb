@@ -16,7 +16,7 @@ RSpec.describe "Events and Voting Workflow", type: :system do
     expect(page).to have_content("Please sign in to vote.")
 
     fill_in "user_id", with: "user_test_browser_1"
-    click_button "Sign In"
+    click_button "Quick Login"
     expect(page).to have_content("Signed in as user_test_browser_1")
 
     find(".btn-upvote").click

@@ -18,10 +18,15 @@
         <span class="user-badge">User: <%= current_user_id %></span>
         <%= button_to "Sign Out", session_path, method: :delete, class: "btn-auth" %>
       <% else %>
-        <div id="clerk-auth-container">
+        <div class="auth-buttons">
+          <% if ENV["CLERK_PUBLISHABLE_KEY"].present? %>
+            <button type="button" class="btn-auth btn-primary" onclick="if(window.Clerk){window.Clerk.openSignIn()}else{alert('Clerk loading...')}">Sign In</button>
+            <button type="button" class="btn-auth" onclick="if(window.Clerk){window.Clerk.openSignUp()}else{alert('Clerk loading...')}">Sign Up</button>
+          <% end %>
+
           <%= form_with url: session_path, method: :post, local: true, class: "auth-quick-form" do |f| %>
-            <%= f.text_field :user_id, placeholder: "Enter user ID (e.g. user_123)", required: true, class: "input-auth" %>
-            <%= f.submit "Sign In", class: "btn-auth btn-primary" %>
+            <%= f.text_field :user_id, placeholder: "Dev User ID", required: true, class: "input-auth" %>
+            <%= f.submit "Quick Login", class: "btn-auth" %>
           <% end %>
         </div>
       <% end %>
@@ -90,5 +95,12 @@
     data-clerk-publishable-key="<%= ENV["CLERK_PUBLISHABLE_KEY"] %>"
     src="https://cdn.jsdelivr.net/npm/@clerk/clerk-js@latest/dist/clerk.browser.js"
     type="text/javascript">
+  </script>
+  <script>
+    window.addEventListener("load", async function() {
+      if (window.Clerk) {
+        await window.Clerk.load();
+      }
+    });
   </script>
 <% end %>
