@@ -75,7 +75,7 @@ gem "faraday"
 gem "clerk-sdk-ruby"
 
 group :development, :test do
-  gem "rspec-rails", "~> 7.1"
+  gem "rspec-rails", "~> 8.0"
   gem "factory_bot_rails"
   gem "webmock"
   gem "vcr"
