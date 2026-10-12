@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_12_040417) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_12_055739) do
   create_table "event_store_events", force: :cascade do |t|
     t.string "event_id", limit: 36, null: false
     t.string "event_type", null: false
@@ -51,5 +51,16 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_12_040417) do
     t.index ["external_id"], name: "index_events_on_external_id", unique: true
   end
 
+  create_table "vote_counts", force: :cascade do |t|
+    t.integer "event_id", null: false
+    t.integer "upvotes_count", default: 0, null: false
+    t.integer "downvotes_count", default: 0, null: false
+    t.integer "score", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["event_id"], name: "index_vote_counts_on_event_id", unique: true
+  end
+
   add_foreign_key "event_store_events_in_streams", "event_store_events", column: "event_id", primary_key: "event_id"
+  add_foreign_key "vote_counts", "events"
 end
